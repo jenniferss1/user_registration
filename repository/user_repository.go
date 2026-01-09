@@ -48,3 +48,24 @@ func (ur *UserRepository) GetUsers() ([]model.Users, error) {
 
 	return userList, nil
 }
+
+func (ur *UserRepository) CreateUser(user model.Users) (int, error) {
+	var id int
+	query, err := ur.connection.Prepare("INSERT INTO users" +
+		"(user_name, user_age, user_weight, user_height)" +
+		" VALUES ($1, $2, $3, $4) RETURNING id")
+
+	if err != nil {
+		fmt.Println(err)
+		return 0, err
+	}
+
+	err = query.QueryRow(user.User_name, user.User_age, user.User_weight, user.User_height).Scan(&id)
+	if err != nil {
+		fmt.Println(err)
+		return 0, err
+	}
+
+	query.Close()
+	return id, nil
+}

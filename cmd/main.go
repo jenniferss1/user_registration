@@ -26,7 +26,9 @@ func main() {
 	// controller
 	UserController := controller.NewUserController(UserUsecase)
 
+	// routes
 	server.GET("/users", UserController.GetUsers)
+	server.POST("/user", UserController.CreateUser)
 
 	server.Run(":8000")
 }
