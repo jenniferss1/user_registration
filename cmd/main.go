@@ -29,6 +29,7 @@ func main() {
 	// routes
 	server.GET("/users", UserController.GetUsers)
 	server.POST("/user", UserController.CreateUser)
+	server.GET("/user/:userId", UserController.GetUserByID)
 
 	server.Run(":8000")
 }

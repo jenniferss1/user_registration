@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"modulo/model"
 	"modulo/repository"
 )
@@ -26,5 +27,15 @@ func (uc *UserUsecase) CreateUser(user model.Users) (model.Users, error) {
 	}
 
 	user.ID = userId
+	return user, nil
+}
+
+func (uc *UserUsecase) GetUserByID(userID int) (*model.Users, error) {
+	user, err := uc.repository.GetUserById(userID)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
 	return user, nil
 }
